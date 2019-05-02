@@ -11,7 +11,8 @@ module.exports = {
         database: 'chat'
       });
       dbConnection.connect();
-      dbConnection.query('SELECT * FROM messages', function(err, result, fields) {
+
+      return dbConnection.query('SELECT * FROM messages', function(err, result, fields) {
         if (err) { throw err; } else {
           console.log('inside of message.get', JSON.stringify(result));
           //return array of message objects
@@ -31,7 +32,9 @@ module.exports = {
       var queryArgs = [username, messageContent, roomname];
 
       dbConnection.query(queryString, queryArgs, function (err) {
-        if (err) { throw err; }
+        if (err) { throw err; } else {
+          return '200';
+        }
       });
     } // a function which can be used to insert a message into the database
   },

@@ -8,7 +8,7 @@ CREATE TABLE messages (
 );
 
 CREATE TABLE users (
-  id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(20), PRIMARY KEY (id)
+  id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(20)
 );
 /* Create other tables and define schemas for them here! */
 
