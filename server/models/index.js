@@ -30,8 +30,8 @@ module.exports = {
       var queryString = 'INSERT INTO messages (username, message, roomname) VALUES (?, ?, ?) ';
       var queryArgs = [username, messageContent, roomname];
 
-      dbConnection.query(queryString,queryArgs, function (err) {
-          if (err) { throw err; }
+      dbConnection.query(queryString, queryArgs, function (err) {
+        if (err) { throw err; }
       });
     } // a function which can be used to insert a message into the database
   },
@@ -69,7 +69,7 @@ module.exports = {
 
       dbConnection.query(queryString, queryArgs, function (err) {
         if (err) { throw err; } else {
-          return "Sucessfully added"+ username;
+          return 'Sucessfully added' + username;
         }
       });
     }
