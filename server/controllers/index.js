@@ -3,15 +3,15 @@ var models = require('../models');
 module.exports = {
   messages: {
     get: function (req, res) {
-        //get message request from client 
+      //get message request from client 
         
-        //model
-        res.write(models.messages.get());
-        res.statusc(200);
-        res.end();
-        //get me messages from db
+      //model
+      res.write(models.messages.get());
+      res.statusc(200);
+      res.end();
+      //get me messages from db
 
-        //response with message from db
+      //response with message from db
 
 
 
@@ -21,6 +21,7 @@ module.exports = {
 
       console.log(req.body);
       //respond 200 if succes and 400 if no sucess
+      models.messages.post(req.body.username, req.body.message, req.body.roomname);
       //write file 
       res.status(200);
       res.end();
@@ -34,8 +35,7 @@ module.exports = {
       res.write(models.users.get());
       res.status(200);
       res.end();
-    }
-    ,
+    },
     post: function (req, res) {
       console.log('inside user post');
       console.log(req.body);

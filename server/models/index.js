@@ -12,8 +12,8 @@ module.exports = {
       });
       dbConnection.connect();
       dbConnection.query('SELECT * FROM messages', function(err, result, fields) {
-        if(err) {throw err;} else {
-          console.log('inside of message.get',JSON.stringify(result));
+        if (err) { throw err; } else {
+          console.log('inside of message.get', JSON.stringify(result));
           //return array of message objects
           return JSON.stringify(result);
         }
@@ -27,7 +27,7 @@ module.exports = {
         database: 'chat'
       });
       dbConnection.connect();
-      var queryString = "INSERT INTO messages (username, message, roomname) VALUES (?, ?, ?) ";
+      var queryString = 'INSERT INTO messages (username, message, roomname) VALUES (?, ?, ?) ';
       var queryArgs = [username, messageContent, roomname];
 
       dbConnection.query(queryString,queryArgs, function (err) {
@@ -45,9 +45,10 @@ module.exports = {
         database: 'chat'
       });
       dbConnection.connect();
+      db.dbConnection.connect();
 
       //console.log(dbConnection.query('SELECT * FROM users'));
-      return dbConnection.query('SELECT * FROM users');
+      return db.dbConnection.query('SELECT * FROM users');
 
     },
     
@@ -61,15 +62,15 @@ module.exports = {
       });
       dbConnection.connect();
 
-      var queryString = "INSERT INTO users (username) VALUES (?) ";
+      var queryString = 'INSERT INTO users (username) VALUES (?) ';
       var queryArgs = [username];
        
    
 
-      dbConnection.query(queryString,queryArgs, function (err) {
-          if (err) { throw err; } else {
-            return "Sucessfully added"+ username;
-          }
+      dbConnection.query(queryString, queryArgs, function (err) {
+        if (err) { throw err; } else {
+          return "Sucessfully added"+ username;
+        }
       });
     }
   }
