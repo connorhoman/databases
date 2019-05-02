@@ -7,68 +7,61 @@ module.exports = {
         
       //model
 
-      var messagePromise = function() { return new Promise ((resolve, reject) => {
-        dbConnection = mysql.createConnection({
-          user: 'student',
-          password: 'student',
-          database: 'chat'
+      var messagePromise = function() { 
+        return new Promise ((resolve, reject) => {
+          dbConnection = mysql.createConnection({
+            user: 'student',
+            password: 'student',
+            database: 'chat'
+          });
+          dbConnection.connect();
+    
+          dbConnection.query('SELECT * FROM messages', function(err, result, fields) {
+            if (err) { reject('Error fetching messages'); } else {
+              console.log('inside of message.get', JSON.stringify(result));
+              //return array of message objects
+              resolve(JSON.stringify(result));
+            } 
+          });
         });
-        dbConnection.connect();
-  
-        dbConnection.query('SELECT * FROM messages', function(err, result, fields) {
-          if (err) { reject('Error fetching messages'); } else {
-            console.log('inside of message.get', JSON.stringify(result));
-            //return array of message objects
-            resolve(JSON.stringify(result));
-          }
-        })
-      })
-    };
+      };
       messagePromise().then((results) => {
-          console.log('then result', results);
-          res.write( results);
-          res.status(200);
-          res.end();
+        console.log('then result', results);
+        res.write( results);
+        res.status(200);
+        res.end();
         
     
-      
-      })
-      // res.write(models.messages.get());
-      // res.status(200);
-      // res.end();
-      //get me messages from db
-
-      //response with message from db
-
-
-
+  
+      });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
       //take data from request
-      var messagePromise = function() { return new Promise ((resolve, reject) => {
-        dbConnection = mysql.createConnection({
-          user: 'student',
-          password: 'student',
-          database: 'chat'
-        });
-        dbConnection.connect();
-  
-        var queryString = 'INSERT INTO messages (username, message, roomname) VALUES (?, ?, ?) ';
-        var queryArgs = [req.body.username, req.body.message, req.body.roomname];
-        
-        dbConnection.query(queryString, queryArgs, function (err) {
-          if (err) { reject('Error posting messages'); } else {
-            resolve(200);
-          }
-        });
+      var messagePromise = function() { 
+        return new Promise ((resolve, reject) => {
+          dbConnection = mysql.createConnection({
+            user: 'student',
+            password: 'student',
+            database: 'chat'
+          });
+          dbConnection.connect();
+    
+          var queryString = 'INSERT INTO messages (username, message, roomname) VALUES (?, ?, ?) ';
+          var queryArgs = [req.body.username, req.body.message, req.body.roomname];
+          
+          dbConnection.query(queryString, queryArgs, function (err) {
+            if (err) { reject('Error posting messages'); } else {
+              resolve(200);
+            }
+          });
 
-      })
-    };
+        });
+      };
 
-    messagePromise().then((statusCode) => {
-      res.status(statusCode);
-      res.end();
-    });
+      messagePromise().then((statusCode) => {
+        res.status(statusCode);
+        res.end();
+      });
       //respond 200 if succes and 400 if no sucess
   
     } // a function which handles posting a message to the database
@@ -95,19 +88,3 @@ module.exports = {
   }
 };
 
-/*
- request({
-      method: 'POST',
-      uri: 'http://127.0.0.1:3000/classes/users',
-      json: { username: 'Valjean' }
-    }, function () {
-      // Post a message to the node chat server:
-      request({
-        method: 'POST',
-        uri: 'http://127.0.0.1:3000/classes/messages',
-        json: {
-          username: 'Valjean',
-          message: 'In mercy\'s name, three days is all I need.',
-          roomname: 'Hello'
-        }
-*/
